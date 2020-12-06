@@ -1,0 +1,27 @@
+version: '3'
+services: 
+  express-server:
+    container_name: server
+    image: express-server
+    restart: always
+    ports:
+      - '5000:5000'
+    depends_on: 
+      - mongo
+    networks: 
+      - server-network
+  mongo:
+    container_name: database
+    image: mongo
+    ports: 
+      - '27017:27017'
+    networks: 
+      - server-network
+    volumes:
+      - mongo-data:/data/db
+networks:
+  server-network:
+      driver: bridge
+volumes:
+  mongo-data:
+    driver: local
